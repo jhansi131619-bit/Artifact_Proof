@@ -1,0 +1,23 @@
+id: discount_engine_01
+description: >
+  Create a reusable DiscountEngine and integrate
+  it with CheckoutService.
+
+artifact:
+  file: discount_engine.py
+  class: DiscountEngine
+  functions:
+    - calculate_discount
+
+consumer:
+  file: checkout.py
+  class: CheckoutService
+
+tests:
+  relevant:
+    - tests/test_discount.py
+
+ablation:
+  target_function: calculate_discount
+  strategy: constant_return
+  return_value: null

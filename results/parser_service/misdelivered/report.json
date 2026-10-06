@@ -1,0 +1,98 @@
+{
+  "requirement": {
+    "id": "parser_service_01",
+    "description": "Create a reusable ParserService and use it in report parsing.\n",
+    "artifact": {
+      "file": "parser_service.py",
+      "class_name": "ParserService",
+      "functions": [
+        "parse"
+      ]
+    },
+    "consumer": {
+      "file": "report_parser.py",
+      "class_name": "ReportParser"
+    },
+    "tests": {
+      "relevant": [
+        "tests/test_parser.py"
+      ]
+    },
+    "ablation": {
+      "target_function": "parse",
+      "strategy": "constant_return",
+      "return_value": null
+    }
+  },
+  "structural_validation": {
+    "artifact_file_exists": true,
+    "class_exists": true,
+    "function_exists": true,
+    "consumer_exists": true,
+    "consumer_imports_artifact": false,
+    "consumer_references_artifact": true,
+    "status": "PASS",
+    "explanation": "Structural validation for required artifact and consumer.\nArtifact file exists: YES\nArtifact class exists: YES\nArtifact function exists: YES\nConsumer file exists: YES\nConsumer imports artifact: NO\nConsumer references artifact: YES\nStatus: PASS"
+  },
+  "baseline": {
+    "repo_path": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\ArtifactProof\\benchmark\\parser_service\\misdelivered",
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "runtime_seconds": 4.780083179473877,
+    "test_names": [
+      "benchmark/parser_service/misdelivered/tests/test_parser.py::test_parse_csv_rows",
+      "benchmark/parser_service/misdelivered/tests/test_parser.py::test_parse_empty_content",
+      "benchmark/parser_service/misdelivered/tests/test_parser.py::test_parse_single_row",
+      "3 tests collected in 0.15s"
+    ],
+    "stdout": "...                                                                      [100%]\n3 passed in 0.25s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_parser.py"
+    ]
+  },
+  "post_ablation": {
+    "repo_path": "C:\\Users\\LENOVO\\AppData\\Local\\Temp\\artifactproof_ablation_0okvx9mv\\misdelivered",
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "runtime_seconds": 3.591808557510376,
+    "test_names": [
+      "tests/test_parser.py::test_parse_csv_rows",
+      "tests/test_parser.py::test_parse_empty_content",
+      "tests/test_parser.py::test_parse_single_row",
+      "3 tests collected in 0.03s"
+    ],
+    "stdout": "...                                                                      [100%]\n3 passed in 0.10s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_parser.py"
+    ]
+  },
+  "causal_analysis": {
+    "relevant_tests_before": 3,
+    "relevant_tests_after": 3,
+    "tests_affected": 0,
+    "tests_unaffected": 3,
+    "artifact_causal_score": 0.0,
+    "status": "SUSPICIOUS",
+    "warning_flags": [
+      "Neutralizing the artifact did not affect any passing relevant test."
+    ],
+    "interpretation": "The requested artifact appears structurally present but did not measurably affect the relevant validated behaviour."
+  },
+  "terminal_report": "Requirement:\nCreate a reusable ParserService and use it in report parsing.\n\n\nRequested artifact: parser_service.py::ParserService\n\nFUNCTIONAL VALIDATION\n3 / 3 tests passed\nStatus: PASS\n\nSTRUCTURAL VALIDATION\nArtifact file exists: YES\nParserService exists: YES\nparse exists: YES\nConsumer imports artifact: NO\nConsumer references artifact: YES\nStatus: PASS\n\nCAUSAL VALIDATION\nAblation: parser_service.py::ParserService.parse neutralized\nRelevant tests before: 3 / 3 passed\nRelevant tests after: 3 / 3 passed\nArtifact Causal Score: 0.00\n\nFINAL VERDICT:\nSUSPICIOUS\n\nReason:\nThe requested artifact appears structurally present but did not measurably affect the relevant validated behaviour."
+}

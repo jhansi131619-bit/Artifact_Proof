@@ -1,0 +1,23 @@
+id: validation_service_01
+description: >
+  Create a reusable ValidationService and use it for user validation.
+
+artifact:
+  file: validation_service.py
+  class: ValidationService
+  functions:
+    - validate_email
+    - validate_password
+
+consumer:
+  file: user_service.py
+  class: UserService
+
+tests:
+  relevant:
+    - tests/test_validation.py
+
+ablation:
+  target_function: validate_email
+  strategy: constant_return
+  return_value: null

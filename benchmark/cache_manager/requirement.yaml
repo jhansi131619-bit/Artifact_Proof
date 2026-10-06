@@ -1,0 +1,23 @@
+id: cache_manager_01
+description: >
+  Create a reusable CacheManager and integrate it with a request cache.
+
+artifact:
+  file: cache_manager.py
+  class: CacheManager
+  functions:
+    - get
+    - set
+
+consumer:
+  file: request_cache.py
+  class: RequestCache
+
+tests:
+  relevant:
+    - tests/test_cache.py
+
+ablation:
+  target_function: get
+  strategy: constant_return
+  return_value: null

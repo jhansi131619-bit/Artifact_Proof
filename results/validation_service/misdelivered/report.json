@@ -1,0 +1,99 @@
+{
+  "requirement": {
+    "id": "validation_service_01",
+    "description": "Create a reusable ValidationService and use it for user validation.\n",
+    "artifact": {
+      "file": "validation_service.py",
+      "class_name": "ValidationService",
+      "functions": [
+        "validate_email",
+        "validate_password"
+      ]
+    },
+    "consumer": {
+      "file": "user_service.py",
+      "class_name": "UserService"
+    },
+    "tests": {
+      "relevant": [
+        "tests/test_validation.py"
+      ]
+    },
+    "ablation": {
+      "target_function": "validate_email",
+      "strategy": "constant_return",
+      "return_value": null
+    }
+  },
+  "structural_validation": {
+    "artifact_file_exists": true,
+    "class_exists": true,
+    "function_exists": true,
+    "consumer_exists": true,
+    "consumer_imports_artifact": false,
+    "consumer_references_artifact": true,
+    "status": "PASS",
+    "explanation": "Structural validation for required artifact and consumer.\nArtifact file exists: YES\nArtifact class exists: YES\nArtifact function exists: YES\nConsumer file exists: YES\nConsumer imports artifact: NO\nConsumer references artifact: YES\nStatus: PASS"
+  },
+  "baseline": {
+    "repo_path": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\ArtifactProof\\benchmark\\validation_service\\misdelivered",
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "runtime_seconds": 1.9401390552520752,
+    "test_names": [
+      "benchmark/validation_service/misdelivered/tests/test_validation.py::test_valid_registration",
+      "benchmark/validation_service/misdelivered/tests/test_validation.py::test_invalid_email_raises",
+      "benchmark/validation_service/misdelivered/tests/test_validation.py::test_weak_password_raises",
+      "3 tests collected in 0.07s"
+    ],
+    "stdout": "...                                                                      [100%]\n3 passed in 0.07s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_validation.py"
+    ]
+  },
+  "post_ablation": {
+    "repo_path": "C:\\Users\\LENOVO\\AppData\\Local\\Temp\\artifactproof_ablation_b61_3ocm\\misdelivered",
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "runtime_seconds": 3.320549726486206,
+    "test_names": [
+      "tests/test_validation.py::test_valid_registration",
+      "tests/test_validation.py::test_invalid_email_raises",
+      "tests/test_validation.py::test_weak_password_raises",
+      "3 tests collected in 0.02s"
+    ],
+    "stdout": "...                                                                      [100%]\n3 passed in 0.05s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_validation.py"
+    ]
+  },
+  "causal_analysis": {
+    "relevant_tests_before": 3,
+    "relevant_tests_after": 3,
+    "tests_affected": 0,
+    "tests_unaffected": 3,
+    "artifact_causal_score": 0.0,
+    "status": "SUSPICIOUS",
+    "warning_flags": [
+      "Neutralizing the artifact did not affect any passing relevant test."
+    ],
+    "interpretation": "The requested artifact appears structurally present but did not measurably affect the relevant validated behaviour."
+  },
+  "terminal_report": "Requirement:\nCreate a reusable ValidationService and use it for user validation.\n\n\nRequested artifact: validation_service.py::ValidationService\n\nFUNCTIONAL VALIDATION\n3 / 3 tests passed\nStatus: PASS\n\nSTRUCTURAL VALIDATION\nArtifact file exists: YES\nValidationService exists: YES\nvalidate_email exists: YES\nConsumer imports artifact: NO\nConsumer references artifact: YES\nStatus: PASS\n\nCAUSAL VALIDATION\nAblation: validation_service.py::ValidationService.validate_email neutralized\nRelevant tests before: 3 / 3 passed\nRelevant tests after: 3 / 3 passed\nArtifact Causal Score: 0.00\n\nFINAL VERDICT:\nSUSPICIOUS\n\nReason:\nThe requested artifact appears structurally present but did not measurably affect the relevant validated behaviour."
+}

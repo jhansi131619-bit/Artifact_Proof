@@ -1,0 +1,97 @@
+{
+  "requirement": {
+    "id": "validation_service_01",
+    "description": "Create a reusable ValidationService and use it for user validation.\n",
+    "artifact": {
+      "file": "validation_service.py",
+      "class_name": "ValidationService",
+      "functions": [
+        "validate_email",
+        "validate_password"
+      ]
+    },
+    "consumer": {
+      "file": "user_service.py",
+      "class_name": "UserService"
+    },
+    "tests": {
+      "relevant": [
+        "tests/test_validation.py"
+      ]
+    },
+    "ablation": {
+      "target_function": "validate_email",
+      "strategy": "constant_return",
+      "return_value": null
+    }
+  },
+  "structural_validation": {
+    "artifact_file_exists": true,
+    "class_exists": true,
+    "function_exists": true,
+    "consumer_exists": true,
+    "consumer_imports_artifact": true,
+    "consumer_references_artifact": true,
+    "status": "PASS",
+    "explanation": "Structural validation for required artifact and consumer.\nArtifact file exists: YES\nArtifact class exists: YES\nArtifact function exists: YES\nConsumer file exists: YES\nConsumer imports artifact: YES\nConsumer references artifact: YES\nStatus: PASS"
+  },
+  "baseline": {
+    "repo_path": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\ArtifactProof\\benchmark\\validation_service\\correct",
+    "total_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "runtime_seconds": 4.942504167556763,
+    "test_names": [
+      "benchmark/validation_service/correct/tests/test_validation.py::test_valid_registration",
+      "benchmark/validation_service/correct/tests/test_validation.py::test_invalid_email_raises",
+      "benchmark/validation_service/correct/tests/test_validation.py::test_weak_password_raises",
+      "3 tests collected in 0.10s"
+    ],
+    "stdout": "...                                                                      [100%]\n3 passed in 0.21s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_validation.py"
+    ]
+  },
+  "post_ablation": {
+    "repo_path": "C:\\Users\\LENOVO\\AppData\\Local\\Temp\\artifactproof_ablation_wqibk8ng\\correct",
+    "total_tests": 3,
+    "passed": 2,
+    "failed": 1,
+    "skipped": 0,
+    "exit_code": 1,
+    "runtime_seconds": 3.2925026416778564,
+    "test_names": [
+      "tests/test_validation.py::test_valid_registration",
+      "tests/test_validation.py::test_invalid_email_raises",
+      "tests/test_validation.py::test_weak_password_raises",
+      "3 tests collected in 0.02s"
+    ],
+    "stdout": "F..                                                                      [100%]\n================================== FAILURES ===================================\n___________________________ test_valid_registration ___________________________\n\n    def test_valid_registration():\n        service = UserService()\n>       user = service.register(\"user@example.com\", \"pass1234\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n..\\..\\..\\..\\..\\OneDrive\\Desktop\\ArtifactProof\\benchmark\\validation_service\\correct\\tests\\test_validation.py:8: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <user_service.UserService object at 0x000001E9F61E9160>\nemail = 'user@example.com', password = 'pass1234'\n\n    def register(self, email, password):\n        if not ValidationService.validate_email(email):\n>           raise ValueError(\"invalid email\")\nE           ValueError: invalid email\n\nuser_service.py:7: ValueError\n=========================== short test summary info ===========================\nFAILED tests/test_validation.py::test_valid_registration - ValueError: invali...\n1 failed, 2 passed in 0.26s\n",
+    "stderr": "",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_validation.py"
+    ]
+  },
+  "causal_analysis": {
+    "relevant_tests_before": 3,
+    "relevant_tests_after": 2,
+    "tests_affected": 1,
+    "tests_unaffected": 2,
+    "artifact_causal_score": 0.3333,
+    "status": "CONFIRMED",
+    "warning_flags": [],
+    "interpretation": "Evidence suggests the requested artifact measurably controlled the validated behaviour."
+  },
+  "terminal_report": "Requirement:\nCreate a reusable ValidationService and use it for user validation.\n\n\nRequested artifact: validation_service.py::ValidationService\n\nFUNCTIONAL VALIDATION\n3 / 3 tests passed\nStatus: PASS\n\nSTRUCTURAL VALIDATION\nArtifact file exists: YES\nValidationService exists: YES\nvalidate_email exists: YES\nConsumer imports artifact: YES\nConsumer references artifact: YES\nStatus: PASS\n\nCAUSAL VALIDATION\nAblation: validation_service.py::ValidationService.validate_email neutralized\nRelevant tests before: 3 / 3 passed\nRelevant tests after: 2 / 3 passed\nArtifact Causal Score: 0.33\n\nFINAL VERDICT:\nCONFIRMED\n\nReason:\nEvidence suggests the requested artifact measurably controlled the validated behaviour."
+}

@@ -1,0 +1,29 @@
+Requirement:
+Create a reusable AuthService and use it in the application login flow.
+
+
+Requested artifact: auth_service.py::AuthService
+
+FUNCTIONAL VALIDATION
+3 / 3 tests passed
+Status: PASS
+
+STRUCTURAL VALIDATION
+Artifact file exists: YES
+AuthService exists: YES
+authenticate exists: YES
+Consumer imports artifact: NO
+Consumer references artifact: YES
+Status: PASS
+
+CAUSAL VALIDATION
+Ablation: auth_service.py::AuthService.authenticate neutralized
+Relevant tests before: 3 / 3 passed
+Relevant tests after: 3 / 3 passed
+Artifact Causal Score: 0.00
+
+FINAL VERDICT:
+SUSPICIOUS
+
+Reason:
+The requested artifact appears structurally present but did not measurably affect the relevant validated behaviour.

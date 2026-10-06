@@ -1,0 +1,22 @@
+id: parser_service_01
+description: >
+  Create a reusable ParserService and use it in report parsing.
+
+artifact:
+  file: parser_service.py
+  class: ParserService
+  functions:
+    - parse
+
+consumer:
+  file: report_parser.py
+  class: ReportParser
+
+tests:
+  relevant:
+    - tests/test_parser.py
+
+ablation:
+  target_function: parse
+  strategy: constant_return
+  return_value: null

@@ -1,0 +1,122 @@
+[
+  {
+    "task_id": "auth_service",
+    "implementation_type": "correct",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 3,
+    "artifact_causal_score": 1.0,
+    "artifactproof_verdict": "CONFIRMED",
+    "expected_verdict": "CONFIRMED",
+    "detection_correct": true
+  },
+  {
+    "task_id": "auth_service",
+    "implementation_type": "misdelivered",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 0,
+    "artifact_causal_score": 0.0,
+    "artifactproof_verdict": "SUSPICIOUS",
+    "expected_verdict": "SUSPICIOUS",
+    "detection_correct": true
+  },
+  {
+    "task_id": "cache_manager",
+    "implementation_type": "correct",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 3,
+    "artifact_causal_score": 1.0,
+    "artifactproof_verdict": "CONFIRMED",
+    "expected_verdict": "CONFIRMED",
+    "detection_correct": true
+  },
+  {
+    "task_id": "cache_manager",
+    "implementation_type": "misdelivered",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 0,
+    "artifact_causal_score": 0.0,
+    "artifactproof_verdict": "SUSPICIOUS",
+    "expected_verdict": "SUSPICIOUS",
+    "detection_correct": true
+  },
+  {
+    "task_id": "discount_engine",
+    "implementation_type": "correct",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 3,
+    "artifact_causal_score": 1.0,
+    "artifactproof_verdict": "CONFIRMED",
+    "expected_verdict": "CONFIRMED",
+    "detection_correct": true
+  },
+  {
+    "task_id": "discount_engine",
+    "implementation_type": "misdelivered",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 0,
+    "artifact_causal_score": 0.0,
+    "artifactproof_verdict": "SUSPICIOUS",
+    "expected_verdict": "SUSPICIOUS",
+    "detection_correct": true
+  },
+  {
+    "task_id": "parser_service",
+    "implementation_type": "correct",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 3,
+    "artifact_causal_score": 1.0,
+    "artifactproof_verdict": "CONFIRMED",
+    "expected_verdict": "CONFIRMED",
+    "detection_correct": true
+  },
+  {
+    "task_id": "parser_service",
+    "implementation_type": "misdelivered",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 0,
+    "artifact_causal_score": 0.0,
+    "artifactproof_verdict": "SUSPICIOUS",
+    "expected_verdict": "SUSPICIOUS",
+    "detection_correct": true
+  },
+  {
+    "task_id": "validation_service",
+    "implementation_type": "correct",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 1,
+    "artifact_causal_score": 0.3333,
+    "artifactproof_verdict": "CONFIRMED",
+    "expected_verdict": "CONFIRMED",
+    "detection_correct": true
+  },
+  {
+    "task_id": "validation_service",
+    "implementation_type": "misdelivered",
+    "baseline_total_tests": 3,
+    "baseline_passed_tests": 3,
+    "structural_pass": true,
+    "tests_affected_after_ablation": 0,
+    "artifact_causal_score": 0.0,
+    "artifactproof_verdict": "SUSPICIOUS",
+    "expected_verdict": "SUSPICIOUS",
+    "detection_correct": true
+  }
+]

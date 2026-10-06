@@ -1,0 +1,29 @@
+Requirement:
+Create a reusable ValidationService and use it for user validation.
+
+
+Requested artifact: validation_service.py::ValidationService
+
+FUNCTIONAL VALIDATION
+3 / 3 tests passed
+Status: PASS
+
+STRUCTURAL VALIDATION
+Artifact file exists: YES
+ValidationService exists: YES
+validate_email exists: YES
+Consumer imports artifact: YES
+Consumer references artifact: YES
+Status: PASS
+
+CAUSAL VALIDATION
+Ablation: validation_service.py::ValidationService.validate_email neutralized
+Relevant tests before: 3 / 3 passed
+Relevant tests after: 2 / 3 passed
+Artifact Causal Score: 0.33
+
+FINAL VERDICT:
+CONFIRMED
+
+Reason:
+Evidence suggests the requested artifact measurably controlled the validated behaviour.

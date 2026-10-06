@@ -1,0 +1,11 @@
+task_id,implementation_type,baseline_total_tests,baseline_passed_tests,structural_pass,tests_affected_after_ablation,artifact_causal_score,artifactproof_verdict,expected_verdict,detection_correct
+auth_service,correct,3,3,True,3,1.0,CONFIRMED,CONFIRMED,True
+auth_service,misdelivered,3,3,True,0,0.0,SUSPICIOUS,SUSPICIOUS,True
+cache_manager,correct,3,3,True,3,1.0,CONFIRMED,CONFIRMED,True
+cache_manager,misdelivered,3,3,True,0,0.0,SUSPICIOUS,SUSPICIOUS,True
+discount_engine,correct,3,3,True,3,1.0,CONFIRMED,CONFIRMED,True
+discount_engine,misdelivered,3,3,True,0,0.0,SUSPICIOUS,SUSPICIOUS,True
+parser_service,correct,3,3,True,3,1.0,CONFIRMED,CONFIRMED,True
+parser_service,misdelivered,3,3,True,0,0.0,SUSPICIOUS,SUSPICIOUS,True
+validation_service,correct,3,3,True,1,0.3333,CONFIRMED,CONFIRMED,True
+validation_service,misdelivered,3,3,True,0,0.0,SUSPICIOUS,SUSPICIOUS,True

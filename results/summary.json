@@ -1,0 +1,10 @@
+{
+  "implementations_evaluated": 10,
+  "normal_test_pass_rate": 1.0,
+  "misdeliveries": 5,
+  "artifactproof_detected": 10,
+  "false_positives": 0,
+  "false_negatives": 0,
+  "average_acs_correct": 0.8667,
+  "average_acs_misdelivered": 0.0
+}

@@ -1,0 +1,22 @@
+id: auth_service_01
+description: >
+  Create a reusable AuthService and use it in the application login flow.
+
+artifact:
+  file: auth_service.py
+  class: AuthService
+  functions:
+    - authenticate
+
+consumer:
+  file: app.py
+  class: AppService
+
+tests:
+  relevant:
+    - tests/test_auth.py
+
+ablation:
+  target_function: authenticate
+  strategy: constant_return
+  return_value: null
