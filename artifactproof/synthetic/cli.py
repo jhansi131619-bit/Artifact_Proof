@@ -7,6 +7,8 @@ from collections.abc import Sequence
 
 from .dataset import read_programs, read_traces, write_jsonl
 from .generator import GeneratorConfig, SyntheticProgramGenerator
+from .evaluation import MultimodalEvaluator, write_evaluations
+from .models import HTTPVisionModel
 from .render import StateRenderer
 from .transitions import execute_program
 from .types import StructureKind
@@ -32,6 +34,13 @@ def build_parser() -> argparse.ArgumentParser:
     render = subparsers.add_parser("render", help="render trace frames as PNG files")
     render.add_argument("--input", required=True)
     render.add_argument("--output-dir", required=True)
+    evaluate = subparsers.add_parser("evaluate", help="evaluate rendered traces with a model")
+    evaluate.add_argument("--input", required=True, help="trace JSONL file")
+    evaluate.add_argument("--images", required=True, help="rendered image root")
+    evaluate.add_argument("--output", required=True, help="evaluation JSONL file")
+    evaluate.add_argument("--endpoint", required=True)
+    evaluate.add_argument("--model", required=True)
+    evaluate.add_argument("--api-key-env", default="ARTIFACTPROOF_MODEL_API_KEY")
     return parser
 
 
@@ -64,6 +73,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         for trace in read_traces(arguments.input):
             count += len(renderer.render_trace(trace, arguments.output_dir))
         print(f"wrote {count} frames to {arguments.output_dir}")
+        return 0
+    if arguments.command == "evaluate":
+        model = HTTPVisionModel(
+            endpoint=arguments.endpoint,
+            model=arguments.model,
+            api_key_env=arguments.api_key_env,
+        )
+        evaluator = MultimodalEvaluator(model)
+        records = evaluator.evaluate(read_traces(arguments.input), arguments.images)
+        write_evaluations(records, arguments.output)
+        print(f"wrote {len(records)} evaluations to {arguments.output}")
         return 0
     return 2
 
