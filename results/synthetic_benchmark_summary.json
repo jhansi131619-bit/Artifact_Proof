@@ -1,0 +1,22 @@
+{
+  "all_invariants_valid": true,
+  "average_operations": 6.54,
+  "examples_per_structure": 100,
+  "experiment": "synthetic-heap-dsu-v1",
+  "invariant_failures": [],
+  "operations": {
+    "connected": 171,
+    "find": 106,
+    "pop": 147,
+    "push": 483,
+    "union": 401
+  },
+  "programs": 200,
+  "seed": 42,
+  "states_checked": 1508,
+  "structures": {
+    "dsu": 100,
+    "heap": 100
+  },
+  "transitions": 1308
+}
