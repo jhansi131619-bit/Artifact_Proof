@@ -68,3 +68,47 @@ def test_execute_and_render_cli_pipeline(tmp_path) -> None:
     assert main(["execute", "--input", str(programs_path), "--output", str(traces_path)]) == 0
     assert main(["render", "--input", str(traces_path), "--output-dir", str(images_path)]) == 0
     assert (images_path / "heap-cli" / "frame-001.png").exists()
+
+
+def test_heap_layout_handles_partial_and_dense_levels() -> None:
+    renderer = StateRenderer()
+
+    partial_positions, partial_radius = renderer._heap_layout(5)
+    dense_positions, dense_radius = renderer._heap_layout(63)
+
+    assert partial_positions[0][0] == 400
+    assert partial_positions[1][0] == 200
+    assert partial_positions[2][0] == 600
+    assert partial_positions[3][0] == 100
+    assert partial_radius == 24
+    assert dense_radius >= 6
+    assert all(
+        dense_radius <= x <= renderer.theme.width - dense_radius
+        for x, _ in dense_positions
+    )
+    deepest = dense_positions[31:]
+    assert all(
+        right[0] - left[0] >= dense_radius * 2
+        for left, right in zip(deepest, deepest[1:])
+    )
+
+
+def test_heap_renderer_handles_empty_single_and_unusual_values(tmp_path) -> None:
+    renderer = StateRenderer()
+    states = [
+        {"values": [], "result": None, "touched": [0]},
+        {"values": [-9999], "result": None, "touched": [0]},
+        {"values": [-2, -2, 100000], "result": None, "touched": [1, 2]},
+        {"values": list(range(63)), "result": None, "touched": [62]},
+    ]
+
+    for index, state in enumerate(states):
+        path = renderer.render_state(
+            StructureKind.HEAP,
+            state,
+            tmp_path / f"edge-{index}.png",
+            step=index,
+            operation=Operation("push", (10**30,)),
+        )
+        with Image.open(path) as image:
+            assert image.size == (800, 520)

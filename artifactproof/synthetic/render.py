@@ -91,24 +91,35 @@ class StateRenderer:
         if not values:
             self._centered_text(draw, "Empty heap", self.theme.height // 2)
             return
-        positions: list[tuple[float, float]] = []
-        top = 88
-        usable_height = self.theme.height - top - 92
-        levels = max(1, math.ceil(math.log2(len(values) + 1)))
-        level_gap = usable_height / max(1, levels - 1)
-        for index in range(len(values)):
-            level = int(math.log2(index + 1))
-            first = (1 << level) - 1
-            offset = index - first
-            slots = 1 << level
-            x = self.theme.width * (offset + 1) / (slots + 1)
-            y = top + level * level_gap
-            positions.append((x, y))
+        positions, radius = self._heap_layout(len(values))
         for index in range(1, len(values)):
             draw.line([positions[(index - 1) // 2], positions[index]], fill=self.theme.edge, width=3)
         for index, (x, y) in enumerate(positions):
             fill = self.theme.touched_fill if index in touched else self.theme.node_fill
-            self._node(draw, x, y, str(values[index]), fill)
+            self._node(draw, x, y, str(values[index]), fill, radius=radius)
+
+    def _heap_layout(self, count: int) -> tuple[list[tuple[float, float]], int]:
+        """Lay out a complete binary tree without clipping or sibling overlap."""
+
+        if count < 1:
+            return [], 24
+        top = 88
+        usable_height = self.theme.height - top - 92
+        levels = int(math.log2(count)) + 1
+        level_gap = usable_height / max(1, levels - 1)
+        deepest_slots = 1 << (levels - 1)
+        horizontal_gap = self.theme.width / deepest_slots
+        radius = max(6, min(24, int(horizontal_gap * 0.32), int(level_gap * 0.32)))
+        positions: list[tuple[float, float]] = []
+        for index in range(count):
+            level = int(math.log2(index + 1))
+            first = (1 << level) - 1
+            offset = index - first
+            slots = 1 << level
+            x = self.theme.width * (2 * offset + 1) / (2 * slots)
+            y = top + level * level_gap
+            positions.append((x, y))
+        return positions, radius
 
     def _draw_dsu(self, draw: ImageDraw.ImageDraw, state: dict[str, Any]) -> None:
         parents = state.get("parents", [])
@@ -155,6 +166,7 @@ class StateRenderer:
             title += f" · {operation.to_code()}"
         if state.get("result") is not None:
             title += f" · result={state['result']}"
+        title = self._truncate_text(draw, title, self.theme.width - 72)
         draw.text((36, 35), title, fill=self.theme.foreground, font=self.font, anchor="lm")
 
     def _node(
@@ -164,8 +176,9 @@ class StateRenderer:
         y: float,
         label: str,
         fill: str,
+        *,
+        radius: int = 24,
     ) -> None:
-        radius = 24
         draw.ellipse(
             (x - radius, y - radius, x + radius, y + radius),
             fill=fill,
@@ -173,6 +186,19 @@ class StateRenderer:
             width=3,
         )
         draw.text((x, y), label, fill=self.theme.foreground, font=self.font, anchor="mm")
+
+    def _truncate_text(
+        self,
+        draw: ImageDraw.ImageDraw,
+        text: str,
+        max_width: int,
+    ) -> str:
+        if draw.textlength(text, font=self.font) <= max_width:
+            return text
+        suffix = "..."
+        while text and draw.textlength(text + suffix, font=self.font) > max_width:
+            text = text[:-1]
+        return text.rstrip() + suffix
 
     def _centered_text(self, draw: ImageDraw.ImageDraw, label: str, y: int) -> None:
         draw.text(
