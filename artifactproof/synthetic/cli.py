@@ -10,6 +10,7 @@ from .generator import GeneratorConfig, SyntheticProgramGenerator
 from .evaluation import MultimodalEvaluator, write_evaluations
 from .models import HTTPVisionModel
 from .metrics import read_evaluations, summarize_evaluations, write_metrics
+from .experiment import load_experiment_config, run_experiment
 from .render import StateRenderer
 from .transitions import execute_program
 from .types import StructureKind
@@ -45,6 +46,8 @@ def build_parser() -> argparse.ArgumentParser:
     metrics = subparsers.add_parser("metrics", help="summarize evaluation JSONL")
     metrics.add_argument("--input", required=True)
     metrics.add_argument("--output", required=True)
+    run = subparsers.add_parser("run", help="run a configured experiment")
+    run.add_argument("--config", required=True)
     return parser
 
 
@@ -93,6 +96,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         summary = summarize_evaluations(read_evaluations(arguments.input))
         write_metrics(summary, arguments.output)
         print(f"wrote metrics for {summary['samples']} samples to {arguments.output}")
+        return 0
+    if arguments.command == "run":
+        manifest = run_experiment(load_experiment_config(arguments.config))
+        print(
+            f"completed {manifest['name']}: "
+            f"{manifest['traces']} traces and {manifest['frames']} frames"
+        )
         return 0
     return 2
 

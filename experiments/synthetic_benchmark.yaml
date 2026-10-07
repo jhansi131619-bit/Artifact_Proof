@@ -1,0 +1,32 @@
+name: synthetic-heap-dsu-v1
+output_dir: results/synthetic
+structures:
+  - heap
+  - dsu
+
+generation:
+  examples_per_structure: 100
+  min_operations: 3
+  max_operations: 10
+  max_value: 99
+  dsu_min_size: 4
+  dsu_max_size: 10
+  seed: 42
+
+rendering:
+  width: 800
+  height: 520
+  background: "#f8fafc"
+  foreground: "#172033"
+  edge: "#64748b"
+  node_fill: "#dbeafe"
+  touched_fill: "#fbbf24"
+  root_fill: "#a7f3d0"
+  caption_fill: "#ffffff"
+
+model:
+  enabled: false
+  endpoint: http://localhost:8000/v1/predict
+  name: local-vision-model
+  api_key_env: ARTIFACTPROOF_MODEL_API_KEY
+  timeout_seconds: 60
