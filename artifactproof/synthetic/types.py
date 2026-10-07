@@ -24,11 +24,43 @@ class Operation:
     def to_dict(self) -> dict[str, Any]:
         return {"name": self.name, "arguments": list(self.arguments)}
 
+    def to_code(self, variable: str = "structure") -> str:
+        arguments = ", ".join(str(argument) for argument in self.arguments)
+        return f"{variable}.{self.name}({arguments})"
+
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> Operation:
         return cls(
             name=str(value["name"]),
             arguments=tuple(int(item) for item in value.get("arguments", [])),
+        )
+
+
+@dataclass(slots=True)
+class Program:
+    """An operation sequence before its states have been executed."""
+
+    example_id: str
+    structure: StructureKind
+    operations: list[Operation]
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "example_id": self.example_id,
+            "structure": self.structure.value,
+            "operations": [operation.to_dict() for operation in self.operations],
+            "code": [operation.to_code() for operation in self.operations],
+            "metadata": self.metadata,
+        }
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Program:
+        return cls(
+            example_id=str(value["example_id"]),
+            structure=StructureKind(value["structure"]),
+            operations=[Operation.from_dict(item) for item in value["operations"]],
+            metadata=dict(value.get("metadata", {})),
         )
 
 
