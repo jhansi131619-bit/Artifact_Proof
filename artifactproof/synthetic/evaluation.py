@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .models import VisionModel
+from .prompts import render_state_prompt
 from .types import Operation, StructureKind, Trace
 
 
@@ -84,11 +85,7 @@ class MultimodalEvaluator:
 
 
 def build_prompt(structure: StructureKind, operation: Operation) -> str:
-    fields = "values, result" if structure is StructureKind.HEAP else "parents, components, result"
-    return (
-        f"Inspect this {structure.value} state after {operation.to_code()}. "
-        f"Return only a JSON object with these fields: {fields}."
-    )
+    return render_state_prompt(structure, operation)
 
 
 def expected_state(structure: StructureKind, state: dict[str, Any]) -> dict[str, Any]:
