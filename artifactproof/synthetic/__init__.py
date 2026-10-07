@@ -5,6 +5,7 @@ from .dsu import DSUMachine, execute_dsu
 from .evaluation import EvaluationRecord, MultimodalEvaluator
 from .heap import HeapMachine, execute_heap
 from .models import HTTPVisionModel, VisionModel
+from .metrics import summarize_evaluations
 from .render import RenderTheme, StateRenderer
 from .transitions import execute_program
 
@@ -24,4 +25,5 @@ __all__ = [
     "execute_heap",
     "execute_program",
     "MultimodalEvaluator",
+    "summarize_evaluations",
 ]
