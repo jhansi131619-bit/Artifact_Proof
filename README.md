@@ -4,6 +4,9 @@
 
 ArtifactProof is a lightweight, local validation prototype for testing whether a required software artifact is actually responsible for the behaviour it was asked to implement, rather than merely existing alongside behaviour that passes conventional tests.
 
+The repository also contains a reproducible synthetic heap/DSU benchmark for testing
+whether multimodal models can recover exact data-structure states from rendered diagrams.
+
 ## Problem
 
 Passing conventional software tests does not necessarily prove that an AI coding agent implemented the software artifact or architectural component explicitly requested by the user. A repository may contain a file or class with the right name, while the real behaviour is implemented elsewhere in the system.
@@ -79,6 +82,49 @@ python -m pip install -r requirements.txt
 python -m artifactproof.cli --repo benchmark/discount_engine/correct --requirement benchmark/discount_engine/requirement.yaml
 python -m artifactproof.cli --repo benchmark/discount_engine/misdelivered --requirement benchmark/discount_engine/requirement.yaml
 ```
+
+## Synthetic multimodal benchmark
+
+The synthetic pipeline creates deterministic operation programs, executes every state
+transition, renders each state as a PNG, asks a configurable vision model to recover the
+state, and computes exact-match and field-level metrics.
+
+```text
+seeded programs -> heap/DSU traces -> PNG frames -> vision model -> metrics
+```
+
+Run the configured data-generation and rendering pipeline:
+
+```bash
+python -m artifactproof.synthetic.cli run --config experiments/synthetic_benchmark.yaml
+```
+
+Model evaluation is disabled in the checked-in configuration so the command is safe to
+run without credentials. To evaluate a model, set `model.enabled: true`, configure its
+HTTP endpoint, and optionally put its bearer token in
+`ARTIFACTPROOF_MODEL_API_KEY`. The endpoint contract is documented in
+[docs/synthetic-benchmark.md](docs/synthetic-benchmark.md).
+
+Individual stages are also available:
+
+```bash
+python -m artifactproof.synthetic.cli generate --output build/programs.jsonl --examples 10 --seed 42
+python -m artifactproof.synthetic.cli execute --input build/programs.jsonl --output build/traces.jsonl
+python -m artifactproof.synthetic.cli render --input build/traces.jsonl --output-dir build/images
+python -m artifactproof.synthetic.cli evaluate --input build/traces.jsonl --images build/images --output build/evaluations.jsonl --endpoint http://localhost:8000/v1/predict --model local-vision-model
+python -m artifactproof.synthetic.cli metrics --input build/evaluations.jsonl --output build/metrics.json
+```
+
+The checked-in seed-42 structural benchmark contains 200 programs and 1,308 transitions.
+All 1,508 states passed heap/DSU invariant checks. Reproduce it with:
+
+```bash
+python experiments/run_synthetic_benchmark.py
+```
+
+See [results/synthetic_benchmark_summary.json](results/synthetic_benchmark_summary.json)
+for the generated summary. These are generator-integrity results, not vision-model
+accuracy claims.
 
 ## Example
 
