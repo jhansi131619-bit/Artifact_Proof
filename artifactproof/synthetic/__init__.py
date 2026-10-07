@@ -3,6 +3,7 @@
 from .types import Operation, Program, StructureKind, Trace
 from .dsu import DSUMachine, execute_dsu
 from .heap import HeapMachine, execute_heap
+from .render import RenderTheme, StateRenderer
 from .transitions import execute_program
 
 __all__ = [
@@ -10,6 +11,8 @@ __all__ = [
     "HeapMachine",
     "Operation",
     "Program",
+    "RenderTheme",
+    "StateRenderer",
     "StructureKind",
     "Trace",
     "execute_dsu",
